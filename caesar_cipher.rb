@@ -6,9 +6,15 @@ shift_factor = (gets.chomp).to_i
 
 def caesar_cipher(string, shift_factor)
   string_modified = Array.new
-  string.each_char do |c|
-    string_modified.push(shift_character(c, shift_factor))
+  
+  string.each_char do |character|
+    if character.match?(/[a-zA-Z]/)
+      string_modified.push(shift_character(character, shift_factor))
+    else
+      string_modified.push(character)
+    end
   end
+  
   string_modified.join
 end
 
