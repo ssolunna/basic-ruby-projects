@@ -1,15 +1,19 @@
 def bubble_sort(array)
-  array.each_with_index.reduce() do |prev_num_and_index, next_num_and_index|
-    prev_num = prev_num_and_index[0]
-    next_num = next_num_and_index[0]
-    prev_num_position = prev_num_and_index[1]
-    next_num_position = next_num_and_index[1]
+  loop do
+    array.each_with_index.reduce() do |prev_num_and_index, next_num_and_index|
+      prev_num = prev_num_and_index[0]
+      next_num = next_num_and_index[0]
+      prev_num_position = prev_num_and_index[1]
+      next_num_position = next_num_and_index[1]
 
-    if prev_num > next_num
-      array.insert(next_num_position, array.delete_at(prev_num_position))
+      if prev_num > next_num
+        array.insert(next_num_position, array.delete_at(prev_num_position))
+      end
+
+      [array[next_num_position], next_num_position]
     end
 
-    [array[next_num_position], next_num_position]
+    break if array.first == array.min && array.last == array.max
   end
 
   array
