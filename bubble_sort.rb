@@ -13,10 +13,26 @@ def bubble_sort(array)
       [array[next_num_position], next_num_position]
     end
 
-    break if array.first == array.min && array.last == array.max
+    break if sorted?(array)
   end
 
   array
 end
 
+def sorted?(array)
+  sorted = true
+  arr = array.rotate(0) # Copy of the array
+
+  array.each do |prev_num|
+    unless arr.all? { |next_num| prev_num <= next_num }
+      sorted = false
+      break
+    end
+    arr.shift
+  end
+
+  sorted
+end
+
 p bubble_sort([4,3,78,2,0,2])
+p bubble_sort([-1,4,3,78,2,0,2,79])
