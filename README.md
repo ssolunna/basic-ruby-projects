@@ -14,6 +14,6 @@ A couple of classic “intro to programming” problems using Ruby to help solid
 
 ### [Recursion](https://www.theodinproject.com/lessons/ruby-recursion)
 - **Fibonacci**: Takes a number and returns an array containing that many numbers from the fibonacci sequence using iteration and recursion.
-
+- **Merge Sort**: Takes in an array and returns a sorted array, using a recursive merge sort methodology
 ___
 Created by [Selena Solunna](http://www.github.com/ssolunna)
