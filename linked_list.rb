@@ -17,14 +17,18 @@ class LinkedList
       node.next_node = Node.new(value)
     end
   end
+
+  def prepend(value)
+    @head = @head.nil? ? Node.new(value) : Node.new(value, @head)
+  end
 end
 
 # Node
 class Node
   attr_accessor :next_node
 
-  def initialize(value = nil)
+  def initialize(value = nil, next_node = nil)
     @value = value
-    @next_node = nil
+    @next_node = next_node
   end
 end
