@@ -3,12 +3,17 @@
 # Linked List
 class LinkedList
   attr_accessor :head
+  attr_reader :size
+  private attr_writer :size
 
   def initialize
     @head = nil
+    @size = 0
   end
 
   def append(value)
+    @size += 1
+
     if @head.nil?
       @head = Node.new(value)
     else
@@ -19,6 +24,8 @@ class LinkedList
   end
 
   def prepend(value)
+    @size += 1
+
     @head = @head.nil? ? Node.new(value) : Node.new(value, @head)
   end
 end
