@@ -33,6 +33,41 @@ class LinkedList
       @head = Node.new(value, @head)
     end
   end
+
+  def each
+    return to_enum(:each) unless block_given?
+
+    node = @head
+
+    @size.times do
+      yield node
+      node = node.next_node
+    end
+
+    self
+  end
+
+  def each_with_index
+    index = 0
+
+    each do |node|
+      yield node, index
+      index += 1
+    end
+
+    self
+  end
+
+  def at(index)
+    index = @size + index if index.negative?
+
+    case index
+    when 0 then @head
+    when @size - 1 then @tail
+    when 1...@size
+      each_with_index { |node, i| return node if i == index }
+    end
+  end
 end
 
 # Node
