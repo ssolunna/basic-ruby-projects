@@ -2,12 +2,12 @@
 
 # Linked List
 class LinkedList
-  attr_accessor :head
-  attr_reader :size
-  private attr_writer :size
+  attr_reader :head, :tail, :size
+  private attr_writer :head, :tail, :size
 
   def initialize
     @head = nil
+    @tail = nil
     @size = 0
   end
 
@@ -16,17 +16,22 @@ class LinkedList
 
     if @head.nil?
       @head = Node.new(value)
+      @tail = @head
     else
-      node = @head
-      node = node.next_node until node.next_node.nil?
-      node.next_node = Node.new(value)
+      @tail.next_node = Node.new(value)
+      @tail = @tail.next_node
     end
   end
 
   def prepend(value)
     @size += 1
 
-    @head = @head.nil? ? Node.new(value) : Node.new(value, @head)
+    if @head.nil?
+      @head = Node.new(value)
+      @tail = @head
+    else
+      @head = Node.new(value, @head)
+    end
   end
 end
 
