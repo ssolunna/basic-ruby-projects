@@ -21,7 +21,7 @@ class LinkedList < Node
     @size = 0
   end
 
-  # Adds a new node containing (value) to the end of the list
+  # Adds a new node containing value to the end of the list
   def append(value)
     @size += 1
 
@@ -34,7 +34,7 @@ class LinkedList < Node
     end
   end
 
-  # Adds a new node containing (value) to the start of the list
+  # Adds a new node containing value to the start of the list
   def prepend(value)
     @size += 1
 
@@ -122,5 +122,20 @@ class LinkedList < Node
 
     each { |node| print "( #{node.value} ) -> " }
     puts 'nil'
+  end
+
+  # Inserts a new node with the provided value at the given index
+  def insert_at(value, index)
+    index = @size + 1 + index if index.negative?
+
+    case index
+    when 0 then prepend(value)
+    when 1...@size
+      previous_node = at(index - 1)
+      @size += 1
+      previous_node.next_node = Node.new(value, previous_node.next_node)
+    else
+      append(value) # if index >= @size
+    end
   end
 end
