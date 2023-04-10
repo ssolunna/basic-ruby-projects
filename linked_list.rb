@@ -11,6 +11,7 @@ class LinkedList
     @size = 0
   end
 
+  # Adds a new node containing (value) to the end of the list
   def append(value)
     @size += 1
 
@@ -23,6 +24,7 @@ class LinkedList
     end
   end
 
+  # Adds a new node containing (value) to the start of the list
   def prepend(value)
     @size += 1
 
@@ -34,6 +36,7 @@ class LinkedList
     end
   end
 
+  # Iterates over the linked list nodes passing each node to the block
   def each
     return to_enum(:each) unless block_given?
 
@@ -47,6 +50,8 @@ class LinkedList
     self
   end
 
+  # Iterates over the linked list nodes passing the node
+  # and its position in the list to the block
   def each_with_index
     index = 0
 
@@ -58,6 +63,7 @@ class LinkedList
     self
   end
 
+  # Returns the node at the given index
   def at(index)
     index = @size + index if index.negative?
 
@@ -69,6 +75,7 @@ class LinkedList
     end
   end
 
+  # Removes the last node from the list
   def pop
     return if @size.zero?
 
@@ -83,18 +90,23 @@ class LinkedList
     @size -= 1
   end
 
+  # Returns true if the passed in value is in the list
+  # Otherwise returns false
   def contains?(value)
     each { |node| return true if node.value == value }
 
     false
   end
 
+  # Returns the index of the node containing the passed in value
+  # Otherwise returns nil
   def find(value)
     each_with_index { |node, index| return index if node.value == value }
 
     nil
   end
 
+  # Represents the linked list objects as string and prints it
   def to_s
     return if @size.zero?
 
