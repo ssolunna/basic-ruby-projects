@@ -1,7 +1,17 @@
 # frozen_string_literal: true
 
+# Node
+class Node
+  protected attr_accessor :next_node, :value
+
+  def initialize(value = nil, next_node = nil)
+    @value = value
+    @next_node = next_node
+  end
+end
+
 # Linked List
-class LinkedList
+class LinkedList < Node
   attr_reader :head, :tail, :size
   private attr_writer :head, :tail, :size
 
@@ -112,15 +122,5 @@ class LinkedList
 
     each { |node| print "( #{node.value} ) -> " }
     puts 'nil'
-  end
-end
-
-# Node
-class Node
-  attr_accessor :next_node, :value
-
-  def initialize(value = nil, next_node = nil)
-    @value = value
-    @next_node = next_node
   end
 end
