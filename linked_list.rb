@@ -68,6 +68,20 @@ class LinkedList
       each_with_index { |node, i| return node if i == index }
     end
   end
+
+  def pop
+    return if @size.zero?
+
+    if @size == 1
+      @head, @tail = nil
+    else
+      previous_node = at(-2)
+      previous_node.next_node = nil
+      @tail = previous_node
+    end
+
+    @size -= 1
+  end
 end
 
 # Node
