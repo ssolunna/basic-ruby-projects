@@ -88,6 +88,12 @@ class LinkedList
 
     false
   end
+
+  def find(value)
+    each_with_index { |node, index| return index if node.value == value }
+
+    nil
+  end
 end
 
 # Node
