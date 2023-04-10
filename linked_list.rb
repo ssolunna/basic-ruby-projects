@@ -82,11 +82,17 @@ class LinkedList
 
     @size -= 1
   end
+
+  def contains?(value)
+    each { |node| return true if node.value == value }
+
+    false
+  end
 end
 
 # Node
 class Node
-  attr_accessor :next_node
+  attr_accessor :next_node, :value
 
   def initialize(value = nil, next_node = nil)
     @value = value
