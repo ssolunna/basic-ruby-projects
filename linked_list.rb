@@ -94,6 +94,13 @@ class LinkedList
 
     nil
   end
+
+  def to_s
+    return if @size.zero?
+
+    each { |node| print "( #{node.value} ) -> " }
+    puts 'nil'
+  end
 end
 
 # Node
