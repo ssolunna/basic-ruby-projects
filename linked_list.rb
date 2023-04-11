@@ -138,4 +138,22 @@ class LinkedList < Node
       append(value) # if index >= @size
     end
   end
+
+  # Removes the node at the given index
+  def remove_at(index)
+    return if @head.nil?
+
+    index = @size + index if index.negative?
+
+    case index
+    when 0
+      @head = @head.next_node
+      @size -= 1
+    when @size - 1 then pop
+    when 1...@size
+      previous_node = at(index - 1)
+      previous_node.next_node = previous_node.next_node.next_node
+      @size -= 1
+    end
+  end
 end
