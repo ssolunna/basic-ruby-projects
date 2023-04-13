@@ -25,25 +25,15 @@ class Tree < Node
   def insert(value)
     node = @root
 
-    return if @root.empty?
-
     while node
-      if value == node.data
-        break
-      elsif value < node.data
-        if node.left.nil?
-          node.left = Node.new(value)
-          break
-        else
-          node = node.left
-        end
+      break if value == node.data
+
+      if value < node.data
+        node.left = Node.new(value) if node.left.nil?
+        node = node.left
       else
-        if node.right.nil?
-          node.right = Node.new(value)
-          break
-        else
-          node = node.right
-        end
+        node.right = Node.new(value) if node.right.nil?
+        node = node.right
       end
     end
   end
