@@ -38,6 +38,21 @@ class Tree < Node
     end
   end
 
+  # Deletes a leaf Node from the Tree
+  def delete(value)
+    node = @root
+
+    while node
+      if value < node.data
+        node.left = nil if value == node.left.data
+        node = node.left
+      else
+        node.right = nil if value == node.right.data
+        node = node.right
+      end
+    end
+  end
+
   # Pretty prints the Tree
   def print(node = @root, prefix = '', is_left = true)
     print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
