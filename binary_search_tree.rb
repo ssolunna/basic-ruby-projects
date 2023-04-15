@@ -28,12 +28,12 @@ class Tree < Node
     while node
       break if value == node.data
 
-      if value < node.data
-        node.left = Node.new(value) if node.left.nil?
-        node = node.left
+      location = proc { |set| value < node.data ? "left#{set}" : "right#{set}" }
+
+      if node.send(location.call).nil?
+        node.send(location.call('='), Node.new(value))
       else
-        node.right = Node.new(value) if node.right.nil?
-        node = node.right
+        node = node.send(location.call)
       end
     end
   end
@@ -43,13 +43,12 @@ class Tree < Node
     node = @root
 
     while node
-      if value < node.data
-        node.left = nil if value == node.left.data
-        node = node.left
-      else
-        node.right = nil if value == node.right.data
-        node = node.right
-      end
+      location = proc { |set| value < node.data ? "left#{set}" : "right#{set}" }
+
+      break if node.send(location.call).nil?
+
+      node.send(location.call('='), nil) if value == node.send(location.call).data
+      node = node.send(location.call)
     end
   end
 
