@@ -38,7 +38,7 @@ class Tree < Node
     end
   end
 
-  # Deletes a leaf Node from the Tree
+  # Deletes a Node from the Tree
   def delete(value)
     node = @root
 
@@ -47,9 +47,23 @@ class Tree < Node
 
       break if node.send(location.call).nil?
 
-      node.send(location.call('='), nil) if value == node.send(location.call).data
+      if value == node.send(location.call).data
+        if leaf?(node.send(location.call))
+          node.send(location.call('='), nil)
+        else
+          child = node.send(location.call).left || node.send(location.call).right
+          node.send(location.call('='), child)
+        end
+      end
+
       node = node.send(location.call)
     end
+  end
+
+  def leaf?(node)
+    return true unless node.left || node.right
+
+    false
   end
 
   # Pretty prints the Tree
