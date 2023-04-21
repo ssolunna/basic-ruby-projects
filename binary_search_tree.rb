@@ -10,6 +10,18 @@ class Node
     @left = left
     @right = right
   end
+
+  protected
+
+  def remove(node)
+    if left == node
+      self.left = nil
+    else
+      self.right = nil
+    end
+
+    node
+  end
 end
 
 # Binary Search Tree
@@ -23,7 +35,7 @@ class Tree < Node
 
   # Inserts a leaf Node in the Tree
   def insert(value)
-    node = @root
+    @root.nil? ? @root = Node.new(value) : node = @root
 
     while node
       break if value == node.data
@@ -41,22 +53,23 @@ class Tree < Node
   # Deletes a Node from the Tree
   def delete(value)
     node = @root
+    parent_node = nil
 
     while node
-      location = proc { |set| value < node.data ? "left#{set}" : "right#{set}" }
-
-      break if node.send(location.call).nil?
-
-      if value == node.send(location.call).data
-        if leaf?(node.send(location.call))
-          node.send(location.call('='), nil)
-        else
-          child = node.send(location.call).left || node.send(location.call).right
-          node.send(location.call('='), child)
+      if value == node.data
+        if leaf?(node)
+          node == @root ? @root = nil : parent_node.remove(node)
+        else # has only one child
+          child = node.left || node.right
+          node == @root ? @root = nil : parent_node.remove(node)
+          insert(child.data)
         end
+
+        break
       end
 
-      node = node.send(location.call)
+      parent_node = node
+      node = value < node.data ? node.left : node.right
     end
   end
 
@@ -68,6 +81,8 @@ class Tree < Node
 
   # Pretty prints the Tree
   def print(node = @root, prefix = '', is_left = true)
+    return if @root.nil?
+
     print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
