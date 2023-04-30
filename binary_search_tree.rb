@@ -5,7 +5,8 @@ class Node
   attr_reader :data, :left, :right
   protected attr_writer :data, :left, :right
 
-  def initialize(data, left = nil, right = nil)
+  def initialize(tree, data, left = nil, right = nil)
+    @tree = tree
     @data = data
     @left = left
     @right = right
@@ -14,13 +15,19 @@ class Node
   protected
 
   def remove(node)
-    if left == node
-      self.left = nil
+    if self == node
+      @tree.remove_root
+    elsif left == node
+      @left = nil
     else
-      self.right = nil
+      @right = nil
     end
 
     node
+  end
+
+  def add(node)
+    node.data < data ? @left = node : @right = node
   end
 end
 
@@ -35,7 +42,7 @@ class Tree < Node
 
   # Inserts a leaf Node in the Tree
   def insert(value)
-    @root.nil? ? @root = Node.new(value) : node = @root
+    @root.nil? ? @root = Node.new(self, value) : node = @root
 
     while node
       break if value == node.data
@@ -43,7 +50,7 @@ class Tree < Node
       location = proc { |set| value < node.data ? "left#{set}" : "right#{set}" }
 
       if node.send(location.call).nil?
-        node.send(location.call('='), Node.new(value))
+        node.send(location.call('='), Node.new(self, value))
       else
         node = node.send(location.call)
       end
@@ -53,19 +60,22 @@ class Tree < Node
   # Deletes a Node from the Tree
   def delete(value)
     node = @root
-    parent_node = nil
 
     while node
       if value == node.data
+        parent_node = @root if node == @root
+
         if leaf?(node)
-          node == @root ? @root = nil : parent_node.remove(node)
+          parent_node.remove(node)
+        elsif two_children?(node)
+          node.data = delete_inorder_successor(node).data
         else # has only one child
           child = node.left || node.right
-          node == @root ? @root = nil : parent_node.remove(node)
-          insert(child.data)
+          parent_node.remove(node)
+          parent_node.add(child)
         end
 
-        break
+        return node
       end
 
       parent_node = node
@@ -73,10 +83,24 @@ class Tree < Node
     end
   end
 
+  def delete_inorder_successor(node)
+    successor = node.right
+
+    successor = successor.left while successor.left
+
+    delete(successor.data)
+
+    successor
+  end
+
   def leaf?(node)
     return true unless node.left || node.right
 
     false
+  end
+
+  def two_children?(node)
+    node.left && node.right
   end
 
   # Pretty prints the Tree
@@ -86,6 +110,10 @@ class Tree < Node
     print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
+
+  def remove_root
+    @root = nil
   end
 end
 
@@ -98,5 +126,5 @@ def build_tree(array)
   left = build_tree(array[0...mid])
   right = build_tree(array[mid + 1...array.size])
 
-  Node.new(array[mid], left, right)
+  Node.new(self, array[mid], left, right)
 end
