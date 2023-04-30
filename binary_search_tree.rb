@@ -60,10 +60,24 @@ class Tree < Node
     until queue.empty?
       node = queue.first
       yield node
-      queue.append node.left, node.right
       queue.shift
+      queue.append node.left, node.right
       queue.compact!
     end
+  end
+
+  # Traverses the Tree in breadth-first level order using recursion
+  def rlevel_order(queue = [@root], &block)
+    return @array unless block_given?
+
+    return if queue.empty?
+
+    node = queue.first
+    yield node
+    queue.shift
+    queue.append node.left, node.right
+
+    rlevel_order(queue.compact, &block)
   end
 
   # Inserts a leaf Node in the Tree
