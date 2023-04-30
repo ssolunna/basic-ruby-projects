@@ -53,6 +53,19 @@ class Tree < Node
     node
   end
 
+  # Traverses the Tree in breadth-first level order
+  def level_order(queue = [@root])
+    return @array unless block_given?
+
+    until queue.empty?
+      node = queue.first
+      yield node
+      queue.append node.left, node.right
+      queue.shift
+      queue.compact!
+    end
+  end
+
   # Inserts a leaf Node in the Tree
   def insert(value)
     @root.nil? ? @root = Node.new(self, value) : node = @root
