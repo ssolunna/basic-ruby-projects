@@ -40,6 +40,19 @@ class Tree < Node
     @root = build_tree(array.uniq.sort)
   end
 
+  # Returns the Node with the given value
+  def find(value)
+    node = @root
+
+    while node
+      break if value == node.data
+
+      node = value < node.data ? node.left : node.right
+    end
+
+    node
+  end
+
   # Inserts a leaf Node in the Tree
   def insert(value)
     @root.nil? ? @root = Node.new(self, value) : node = @root
