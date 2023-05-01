@@ -80,6 +80,17 @@ class Tree < Node
     rlevel_order(queue.compact, &block)
   end
 
+  # Traverses the Three in deep-first inorder
+  def inorder(node = @root, &block)
+    return @array unless block_given?
+
+    return if node.nil?
+
+    inorder(node.left, &block)
+    yield node
+    inorder(node.right, &block)
+  end
+
   # Inserts a leaf Node in the Tree
   def insert(value)
     @root.nil? ? @root = Node.new(self, value) : node = @root
