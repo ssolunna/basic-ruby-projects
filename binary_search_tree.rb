@@ -102,6 +102,17 @@ class Tree < Node
     preorder(node.right, &block)
   end
 
+  # Traverses the Tree in deep-first postorder
+  def postorder(node = @root, &block)
+    return @array unless block_given?
+
+    return if node.nil?
+
+    postorder(node.left, &block)
+    postorder(node.right, &block)
+    yield node
+  end
+
   # Inserts a leaf Node in the Tree
   def insert(value)
     @root.nil? ? @root = Node.new(self, value) : node = @root
