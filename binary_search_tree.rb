@@ -113,8 +113,9 @@ class Tree < Node
     yield node
   end
 
-  def height(node)
-    node = find(node)
+  # Finds the height of a given node
+  def height(value)
+    node = find(value)
 
     return unless node
 
@@ -133,7 +134,24 @@ class Tree < Node
       left_child = left_child.left
     end
 
-    right_children > left_children ? right_children : left_children 
+    right_children > left_children ? right_children : left_children
+  end
+
+  # Finds the depth of a given node
+  def depth(value)
+    return unless find(value)
+    return 0 if value == @root.data
+
+    node = @root
+    size = 0
+
+    while node
+      size += 1
+
+      return size if value == node.left.data || value == node.right.data
+
+      node = value < node.data ? node.left : node.right
+    end
   end
 
   # Inserts a leaf Node in the Tree
