@@ -113,6 +113,29 @@ class Tree < Node
     yield node
   end
 
+  def height(node)
+    node = find(node)
+
+    return unless node
+
+    right_child = node.right
+    left_child = node.left
+
+    right_children = 0
+    while right_child
+      right_children += 1
+      right_child = right_child.right
+    end
+
+    left_children = 0
+    while left_child
+      left_children += 1
+      left_child = left_child.left
+    end
+
+    right_children > left_children ? right_children : left_children 
+  end
+
   # Inserts a leaf Node in the Tree
   def insert(value)
     @root.nil? ? @root = Node.new(self, value) : node = @root
