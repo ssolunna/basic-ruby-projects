@@ -144,6 +144,11 @@ class Tree < Node
     end
   end
 
+  # Checks if the tree is balanced
+  def balanced?
+    (height(@root.left) - height(@root.right)).abs <= 1
+  end
+
   # Inserts a leaf Node in the Tree
   def insert(value)
     @root.nil? ? @root = Node.new(self, value) : node = @root
