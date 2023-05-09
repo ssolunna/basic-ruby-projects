@@ -113,26 +113,16 @@ class Tree < Node
     yield node
   end
 
-  # Finds the height of a given node
+  # Finds the height of a given node/value
   def height(value)
-    node = find(value)
+    return -1 unless value
 
-    return unless node
+    node = value.instance_of?(Node) ? value : find(value)
 
-    right_child = node.right
-    left_child = node.left
+    return 0 if leaf?(node)
 
-    right_children = 0
-    while right_child
-      right_children += 1
-      right_child = right_child.right
-    end
-
-    left_children = 0
-    while left_child
-      left_children += 1
-      left_child = left_child.left
-    end
+    left_children = height(node.left) + 1
+    right_children = height(node.right) + 1
 
     right_children > left_children ? right_children : left_children
   end
