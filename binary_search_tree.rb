@@ -149,6 +149,13 @@ class Tree < Node
     (height(@root.left) - height(@root.right)).abs <= 1
   end
 
+  # Rebalances an unbalanced tree
+  def rebalance
+    new_array = []
+    inorder { |node| new_array << node.data }
+    @root = build_tree(new_array)
+  end
+
   # Inserts a leaf Node in the Tree
   def insert(value)
     @root.nil? ? @root = Node.new(self, value) : node = @root
