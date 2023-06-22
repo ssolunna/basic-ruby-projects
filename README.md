@@ -8,7 +8,7 @@ A couple of classic “intro to programming” problems using Ruby to help solid
 
 ### Basic
 - [**Caesar Cipher**](https://www.theodinproject.com/lessons/ruby-caesar-cipher): Takes in a string and the shift factor and then outputs the modified string using the Caesar Cipher technique.
-- [**Sub Strings**](https://www.theodinproject.com/lessons/ruby-sub-strings): Return a hash listing each substring from a dictionary (case insensitive) that was found in the original string and how many times it was found.
+- [**Sub Strings**](https://www.theodinproject.com/lessons/ruby-sub-strings): Returns a hash listing each substring from a dictionary (case insensitive) that was found in the original string and how many times it was found.
 - [**Stock Picker**](https://www.theodinproject.com/lessons/ruby-stock-picker): Takes in an array of stock prices, one for each hypothetical day, and return a pair of days representing the best day to buy and the best day to sell.
 - [**Bubble sort**](https://www.theodinproject.com/lessons/ruby-bubble-sort): Sort a group of numbers in an array using the Bubble Sort method.
 
@@ -17,6 +17,8 @@ A couple of classic “intro to programming” problems using Ruby to help solid
 - **Merge Sort**: Takes in an array and returns a sorted array, using a recursive merge sort methodology
 
 ### Data Structures and Algorithms
-- [**Linked Lists**](https://www.theodinproject.com/lessons/ruby-linked-lists)
+- [**Linked Lists**](https://www.theodinproject.com/lessons/ruby-linked-lists): Builds a linked list class.
+- [**Binary Search Trees**](https://www.theodinproject.com/lessons/ruby-binary-search-trees): Builds a balanced BST.
+- [**Knight Travail**](https://www.theodinproject.com/lessons/ruby-knights-travails): Shows the shortest possible way to get from one square to another by outputting all squares the knight will stop on along the way.
 ___
 Created by [Selena Solunna](http://www.github.com/ssolunna)
