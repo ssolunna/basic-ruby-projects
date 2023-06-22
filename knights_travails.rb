@@ -10,14 +10,6 @@
 #  [0,1] [1,1] [2,1] [3,1] [4,1] [5,1] [6,1] [7,1]
 #  [0,0] [1,0] [2,0] [3,0] [4,0] [5,0] [6,0] [7,0]
 
-# Prints the shortest path between two squares
-def knight_moves(start_square, end_square)
-  knight_board = Board.new(Square.new(start_square)).create
-  knight = Knight.new(knight_board, end_square)
-  puts "You made it in #{knight.travail.size - 1} move(s)! Here's your path:"
-  knight.travail.each { |move| p move }
-end
-
 # Knight next possible @moves from starting Square (@data)
 class Square
   attr_accessor :data, :moves
@@ -140,3 +132,17 @@ class Knight
     travail(paths)
   end
 end
+
+# Prints the shortest path between two squares
+def knight_moves(start_square, end_square)
+  knight_board = Board.new(Square.new(start_square)).create
+  knight = Knight.new(knight_board, end_square)
+  puts "You made it in #{knight.travail.size - 1} move(s)! Here's your path:"
+  knight.travail.each { |move| p move }
+end
+
+knight_moves([0,0], [3,3])
+puts
+knight_moves([3,3], [4,4])
+puts
+knight_moves([0,0], [7,7])
