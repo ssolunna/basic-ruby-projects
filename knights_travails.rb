@@ -10,10 +10,12 @@
 #  [0,1] [1,1] [2,1] [3,1] [4,1] [5,1] [6,1] [7,1]
 #  [0,0] [1,0] [2,0] [3,0] [4,0] [5,0] [6,0] [7,0]
 
+# Prints the shortest path between two squares
 def knight_moves(start_square, end_square)
-  knight_board = Board.new(Square.new(start_square))
-  knight_board.create
-  knight_board.board
+  knight_board = Board.new(Square.new(start_square)).create
+  knight = Knight.new(knight_board, end_square)
+  puts "You made it in #{knight.travail.size - 1} move(s)! Here's your path:"
+  knight.travail.each { |move| p move }
 end
 
 # Knight next possible @moves from starting Square (@data)
@@ -36,23 +38,23 @@ class Board < Square
 
   # Creates @board with all possible moves the Knight can make
   def create(queue = [*@board])
-    return if queue.empty?
+    return @board if queue.empty?
 
     square = queue.first
 
-    square.moves.push right(square.data, 'up'),
-                      right(square.data, 'down'),
+    square.moves.push up(square.data, 'right'),
+                      up(square.data, 'left'),
                       left(square.data, 'up'),
                       left(square.data, 'down'),
-                      up(square.data, 'right'),
-                      up(square.data, 'left'),
+                      right(square.data, 'up'),
+                      right(square.data, 'down'),
                       down(square.data, 'right'),
                       down(square.data, 'left')
 
     square.moves.compact!
 
     square.moves.each do |move|
-      next if @board.find { |node| node.data == move }
+      next if @board.find { |square| square.data == move }
 
       move = Square.new(move)
       @board.push(move)
@@ -109,5 +111,32 @@ class Board < Square
     return nil if new_square.any? { |element| element.negative? || element >= 8 }
 
     new_square
+  end
+end
+
+# Knight piece of chess
+class Knight
+  def initialize(board, target)
+    @board = board
+    @root = @board[0]
+    @target = target
+  end
+
+  # Finds the shortest path between the starting square (@root) and the ending square (@target)
+  def travail(paths = [[@root.data]])
+    path = paths.first
+
+    current_square = @board.find { |square| square.data == path.last }
+
+    current_square.moves.each do |move|
+      next if path.include?(move)
+
+      return [*path, move] if move == @target
+
+      paths << [*path, move]
+    end
+
+    paths.shift
+    travail(paths)
   end
 end
