@@ -11,3 +11,9 @@ describe "#shift_character" do
     expect(shift_character("W", 5)).to eql("B")
   end
 end
+
+describe "#caesar_cipher" do
+  it "returns a string modified by the shift factor" do
+    expect(caesar_cipher("What a string!", 5)).to eql("Bmfy f xywnsl!")
+  end
+end
